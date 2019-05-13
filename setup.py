@@ -1,0 +1,23 @@
+from setuptools import setup, find_packages
+from styrofoam import __version__
+
+setup(
+	name='styrofoam',
+	version=__version__,
+	packages=find_packages(),
+	
+	author='Dull Bananas',
+	author_email='dull.bananas0@gmail.com',
+	license='Unlicense',
+	description='Smart and lightweight WSGI router for running multiple separate WSGI apps',
+	keywords='wsgi router',
+	url='https://github.com/dullbananas/styrofoam',
+	classifiers=[
+		'Development Status :: 3 - Alpha',
+		'License :: Public Domain',
+		'Natural Language :: English',
+		'Operating System :: OS Independent',
+		'Programming Language :: Python :: 3 :: Only',
+		'Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware'
+	],
+)
