@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 from styrofoam import __version__
 
+with open('README.md') as f:
+	readme = f.read()
+
 setup(
 	name='styrofoam',
 	version=__version__,
@@ -10,6 +13,7 @@ setup(
 	author_email='dull.bananas0@gmail.com',
 	license='Unlicense',
 	description='Smart and lightweight WSGI router for running multiple separate WSGI apps',
+	long_description=readme,
 	keywords='wsgi router',
 	url='https://github.com/dullbananas/styrofoam',
 	classifiers=[
@@ -18,6 +22,6 @@ setup(
 		'Natural Language :: English',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python :: 3 :: Only',
-		'Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware'
+		'Topic :: Internet :: WWW/HTTP :: WSGI :: Middleware',
 	],
 )
