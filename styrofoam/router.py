@@ -38,7 +38,7 @@ class Application:
 
 class Router:
 	
-	__slots__ = ('default_app', 'apps')
+	__slots__ = ('default', 'apps')
 
 	def __init__(self, default_app=None, apps=[]):
 		if default_app:
