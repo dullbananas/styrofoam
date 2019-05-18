@@ -57,3 +57,14 @@ class Router:
 			my_router.add_app(func=f, url='/hi')
 		'''
 		self.apps.append(Application(*args))
+	
+	def __call__(self, environ, start_response):
+		selected_app = None
+		for app in self.apps:
+			if environ['SCRIPT_NAME'].startswith(app.url):
+				selected_app = app
+				break
+		if selected_app is not None:
+			return selected_app.func(environ, start_response)
+		else:
+			return self.default.func(environ, start_response)
