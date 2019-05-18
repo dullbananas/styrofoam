@@ -1,5 +1,6 @@
 '''Contains the main Router class that functions as the main WSGI app, and an
-Application object that represents a WSGI app'''
+Application object that represents a WSGI app
+'''
 
 
 class Application:
@@ -24,23 +25,35 @@ class Application:
 	                    attribute.
 	'''
 	
-	def __init__(
-		self,
-		func,
-		url,
-		modify_urls=True,
-		minify=False,
-	):
+	def __init__(self, func, url, modify_urls=True, minify=False):
 		self.func = func
 		self.url = url
 		self.modify_urls = modify_urls
 		self.minify = minify
+	
+	def __call__(self, *args):
+		'''Calls the application's ``func`` attribute'''
+		self.func(*args)
 
 
 class Router:
+	
+	__slots__ = ('default_app', 'apps')
 
-	def __init__(self, default_app=None, apps=None):
+	def __init__(self, default_app=None, apps=[]):
 		if default_app:
 			self.default = Application(func=default_app, url='/')
-		if apps:
-			self.apps=apps
+		self.apps=apps
+	
+	def add_app(self, *args):
+		'''Adds a WSGI application to the router. The attributes passed to this
+		method are passed to ``Application.__init__``, so these two are the same:
+		::
+			
+			my_router.apps.append(Application(func=f, url='/hi'))
+		
+		::
+			
+			my_router.add_app(func=f, url='/hi')
+		'''
+		self.apps.append(Application(*args))
