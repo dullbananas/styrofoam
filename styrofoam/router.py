@@ -32,6 +32,7 @@ class Application:
 		self.url = url
 		self.modify_urls = modify_urls
 		self.minify = minify
+		logging.debug('Initialized Application with url "{}" and handler {}'.format(url, func))
 	
 	def __call__(self, *args):
 		'''Calls the application's ``func`` attribute'''
