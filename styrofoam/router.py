@@ -2,6 +2,8 @@
 Application object that represents a WSGI app
 '''
 
+import logging
+
 
 class Application:
 	'''This class represents a WSGI application. It holds the WSGI handler
@@ -44,6 +46,7 @@ class Router:
 		if default_app:
 			self.default = Application(func=default_app, url='/')
 		self.apps=apps
+		logging.info('Initialized styrofoam.Router')
 	
 	def add_app(self, *args):
 		'''Adds a WSGI application to the router. The attributes passed to this
@@ -59,11 +62,19 @@ class Router:
 		self.apps.append(Application(*args))
 	
 	def __call__(self, environ, start_response):
+		logging.info('Router has been called')
+		logging.debug('Values in environ dictionary:')
+		for key, value in environ.items():
+			logging.debug('    {} = "{}"'.format(key, value))
 		selected_app = None
 		for app in self.apps:
+			logging.debug('Checking if "{}" starts with "{}"'.format(environ['SCRIPT_NAME'], app.url))
 			if environ['SCRIPT_NAME'].startswith(app.url):
+				logging.debug('App {} has been selected'.format(app))
 				selected_app = app
 				break
+			else:
+				logging.debug('Default app has been selected')
 		if selected_app is not None:
 			return selected_app.func(environ, start_response)
 		else:
