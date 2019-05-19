@@ -32,7 +32,7 @@ class Application:
 		self.url = url
 		self.modify_urls = modify_urls
 		self.minify = minify
-		logging.debug('Initialized Application with url "{}" and handler {}'.format(url, func))
+		logging.info('Initialized Application with url "{}" and handler {}'.format(url, func))
 	
 	def __call__(self, *args):
 		'''Calls the application's ``func`` attribute'''
@@ -70,7 +70,7 @@ class Router:
 		selected_app = None
 		for app in self.apps:
 			logging.debug('Checking if "{}" starts with "{}"'.format(environ['SCRIPT_NAME'], app.url))
-			if environ['SCRIPT_NAME'].startswith(app.url):
+			if environ['PATH_INFO'].startswith(app.url):
 				logging.debug('App {} has been selected'.format(app))
 				selected_app = app
 				break
