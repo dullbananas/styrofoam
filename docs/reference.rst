@@ -12,6 +12,7 @@ Router Class
 
 
 Application Class
+-----------------
 
 .. autoclass:: Application
    :members:
