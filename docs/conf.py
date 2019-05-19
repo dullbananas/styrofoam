@@ -26,7 +26,7 @@ author = 'Dull Bananas'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '1.0.0a2'
+release = '1.0.0a3'
 
 
 # -- General configuration ---------------------------------------------------
