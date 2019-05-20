@@ -1,8 +1,12 @@
 Styrofoam Documentation
-=====================================
+=======================
+
+Styrofoam is a WSGI router that is currently in alpha stage of development.
+
+
 
 Table of Contents
----------
+-----------------
 .. toctree::
    :maxdepth: 3
    
@@ -10,9 +14,8 @@ Table of Contents
 
 
 
-Indices and tables
-==================
+Project Links
+=============
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+* `GitHub <https://github.com/dullbananas/styrofoam>`
+* `PyPI <https://pypi.org/project/styrofoam/>`
