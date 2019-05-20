@@ -17,5 +17,5 @@ Table of Contents
 Project Links
 =============
 
-* `GitHub <https://github.com/dullbananas/styrofoam>`
-* `PyPI <https://pypi.org/project/styrofoam/>`
+* `GitHub <https://github.com/dullbananas/styrofoam>`_
+* `PyPI <https://pypi.org/project/styrofoam/>`_
