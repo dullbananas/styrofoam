@@ -8,12 +8,14 @@ setup(
 	name='styrofoam',
 	version=__version__,
 	packages=find_packages(),
+	python_requires='>=3',
 	
 	author='Dull Bananas',
 	author_email='dull.bananas0@gmail.com',
 	license='Unlicense',
 	description='Smart and lightweight WSGI router for running multiple separate WSGI apps',
 	long_description=readme,
+	long_description_content_type='text/markdown',
 	keywords='wsgi router',
 	url='https://github.com/dullbananas/styrofoam',
 	classifiers=[
