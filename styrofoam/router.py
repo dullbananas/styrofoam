@@ -21,18 +21,14 @@ class Application:
 	                    the one the app is mounted at. For example, an
 	                    application that is mounted at ``/oof`` will have
 	                    ``<a href="/no">`` replaced to ``<a href="/oof/no">``. It
-	                    currently has not been implemented yet. When this
-	                    parameter is set to ``True`` (the default), the app's
-	                    output will be minified regardless of the ``minify``
-	                    attribute.
+	                    currently has not been fully implemented yet.
 	'''
 	
-	def __init__(self, func, url, modify_urls=True, minify=False):
+	def __init__(self, func, url, modify_urls=True):
 		self.func = func
 		self.url = url
 		self.modify_urls = modify_urls
-		self.minify = minify
-		logging.info('Initialized Application with url "{}" and handler {}'.format(url, func))
+		logging.debug('Initialized Application with url "{}" and handler {}'.format(url, func))
 	
 	def __call__(self, *args):
 		'''Calls the application's ``func`` attribute'''
@@ -40,12 +36,21 @@ class Application:
 
 
 class Router:
+	'''This implements the main WSGI app and is the central object. It holds ``Application``
+	objects and can be called as a WSGI app.
+	
+	:param default_app: The default app that is mounted at ``'/'`` (technically it's mounted
+	                    at ``''``). This must be a function, not an ``Application`` object.
+	:param apps: An array of ``Application`` objects that will be used as the initial
+	             value of the ``apps`` property. A tuple should not be used. Default
+	             value is empty array.
+	'''
 	
 	__slots__ = ('default', 'apps')
 
 	def __init__(self, default_app=None, apps=[]):
 		if default_app:
-			self.default = Application(func=default_app, url='/')
+			self.default = Application(func=default_app, url='')
 		self.apps=apps
 		logging.info('Initialized styrofoam.Router')
 	
