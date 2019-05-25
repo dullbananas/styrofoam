@@ -1,5 +1,6 @@
 # Styrofoam
 ![Travis CI Test Status](https://img.shields.io/travis/dullbananas/styrofoam/develop.svg?label=tests)
+![Read the Docs](https://img.shields.io/readthedocs/styrofoam.svg)
 ![PyPI Version](https://img.shields.io/pypi/v/styrofoam.svg)
 ![PyPI Downloads Per Day](https://img.shields.io/pypi/dd/styrofoam.svg)
 ![Commits Per Week](https://img.shields.io/github/commit-activity/w/dullbananas/styrofoam.svg)
