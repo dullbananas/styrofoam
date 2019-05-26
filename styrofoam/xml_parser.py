@@ -16,6 +16,8 @@ class XMLParser:
 			self.parse()
 	
 	def parse(self):
+		# Set parsed_data to empty string
+		self.parsed_data = ''
 		# Initialize XML parser
 		p = xml.ParserCreate()
 		p.StartElementHandler = self.handle_start_element
