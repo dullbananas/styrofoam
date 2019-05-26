@@ -22,7 +22,7 @@ class XMLParser:
 		p.DefaultHandler = self.handle_default
 		# Parse data and log execution time
 		start_time = time.time()
-		p.parse(self.data, True)
+		p.Parse(self.data, True)
 		elapsed_time = time.time() - start_time
 		logging.debug('Parsed {} bytes in {} seconds'.format(len(self.data), elapsed_time))
 		# Return the resulting data
