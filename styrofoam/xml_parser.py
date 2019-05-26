@@ -6,12 +6,13 @@ from .utils import modify_url
 
 class XMLParser:
 	
-	__slots__ = ('data', 'parsed_data')
+	__slots__ = ('data', 'parsed_data', 'url_prefix')
 	
 	replacements = {}
 	
-	def __init__(self, data, parse=False):
+	def __init__(self, data, url_prefix, parse=False):
 		self.data = data
+		self.url_prefix = url_prefix
 		if parse:
 			self.parse()
 	
@@ -42,9 +43,9 @@ class XMLParser:
 			if name in self.replacements.keys():
 				replacement = self.replacements[name]
 				if type(replacement) is str and replacement == key:
-					value = modify_url(value)
+					value = modify_url(value, self.url_prefix)
 				elif key in replacement:
-					value = modify_url(value)
+					value = modify_url(value, self.url_prefix)
 			a += '{}="{}" '.format(key, value)
 		self.a('<{} {}>'.format(name, a))
 	
