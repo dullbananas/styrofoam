@@ -41,9 +41,9 @@ class Router:
 	
 	:param default_app: The default app that is mounted at ``'/'`` (technically it's mounted
 	                    at ``''``). This must be a function, not an ``Application`` object.
-	:param apps: An array of ``Application`` objects that will be used as the initial
+	:param apps: A list of ``Application`` objects that will be used as the initial
 	             value of the ``apps`` property. A tuple should not be used. Default
-	             value is empty array.
+	             value is an empty list.
 	'''
 	
 	__slots__ = ('default', 'apps')
