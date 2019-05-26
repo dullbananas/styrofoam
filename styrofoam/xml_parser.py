@@ -32,11 +32,18 @@ class XMLParser:
 		self.parsed_data += text
 	
 	def handle_start_element(self, name, attributes):
+		# Define variable that holds the resulting key="value" stuff
 		a = ''
+		# Iterate through the existing XML tag's attributes
 		for key, value in attributes.items():
-			if name in self.replacements.keys() and self.replacements[name] == key:
-				value = modify_url(value)
-			a += '{}="{}"'.format(key, value)
+			# See if the tag has a replaceable attribute (one with a URL)
+			if name in self.replacements.keys():
+				replacement = self.replacements[name]
+				if type(replacement) is str and replacement == key:
+					value = modify_url(value)
+				elif key in replacement:
+					value = modify_url(value)
+			a += '{}="{}" '.format(key, value)
 		self.a('<{} {}>'.format(name, a))
 	
 	def handle_default(self, data):
