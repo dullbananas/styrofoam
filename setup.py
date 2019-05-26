@@ -13,7 +13,7 @@ setup(
 	author='Dull Bananas',
 	author_email='dull.bananas0@gmail.com',
 	license='Unlicense',
-	description='Smart and lightweight WSGI router for running multiple separate WSGI apps',
+	description='(Alpha) Advanced WSGI router for running multiple separate WSGI applications',
 	long_description=readme,
 	long_description_content_type='text/markdown',
 	keywords='wsgi router',
