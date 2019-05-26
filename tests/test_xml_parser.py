@@ -1,4 +1,4 @@
-from styrofoam import XMLParser
+from styrofoam.xml_parser import XMLParser
 
 
 class TestParser(XMLParser):
