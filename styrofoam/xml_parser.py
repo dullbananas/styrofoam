@@ -6,7 +6,7 @@ from .utils import modify_url
 
 class XMLParser:
 	
-	__slots__ = ('data', 'replacements', 'parsed_data')
+	__slots__ = ('data', 'parsed_data')
 	
 	replacements = {}
 	
