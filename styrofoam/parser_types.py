@@ -1,6 +1,7 @@
 '''Contains a dictionary that maps MIME types to parsers.'''
 
-mime = {}
+from .parser import *
 
-from .html_parser import HTMLParser
-mime['text/html'] = HTMLParser
+mimetype = {
+	'text/html': HTMLParser
+}

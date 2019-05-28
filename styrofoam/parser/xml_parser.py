@@ -1,7 +1,7 @@
 import xml.parsers.expat as xml
 import logging
 import time
-from .utils import modify_url
+from styrofoam.utils import modify_url
 
 
 class XMLParser:

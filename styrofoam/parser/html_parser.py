@@ -1,4 +1,4 @@
-from .xml_parser import XMLParser
+from . import XMLParser
 
 class HTMLParser(XMLParser):
 	'''Parser for HTML files'''
