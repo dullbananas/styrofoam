@@ -3,7 +3,7 @@ Application object that represents a WSGI app
 '''
 
 import logging
-from .parser_types import mime
+from .parser_types import mimetype as mime
 from .utils import modify_url
 from xml.parsers.expat.errors import messages as expat_messages
 from xml.parsers.expat import ExpatError
