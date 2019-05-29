@@ -1,4 +1,5 @@
 from styrofoam.parser import XMLParser
+import pytest
 
 
 class TestParser(XMLParser):
