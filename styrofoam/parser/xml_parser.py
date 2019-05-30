@@ -28,18 +28,18 @@ class XMLParser:
 		# Set parsed_data to empty string
 		self.parsed_data = ''
 		# Initialize XML parser
-		p = xml.ParserCreate()
-		p.StartElementHandler = self.handle_start_element
-		p.DefaultHandler = self.handle_default
+		parser = xml.ParserCreate()
+		parser.StartElementHandler = self.handle_start_element
+		parser.DefaultHandler = self.handle_default
 		# Parse data and log execution time
 		start_time = time.time()
-		p.Parse(self.data, True)
+		parser.Parse(self.data, True)
 		elapsed_time = time.time() - start_time
 		logging.debug('Parsed {} bytes in {} seconds'.format(len(self.data), elapsed_time))
 		# Return the resulting data
 		return self.data
 	
-	def a(self, text):
+	def append_data(self, text):
 		'''Appends data to ``self.parsed_data``.'''
 		self.parsed_data += text
 	
@@ -57,8 +57,8 @@ class XMLParser:
 				elif key in replacement:
 					value = modify_url(value, self.url_prefix)
 			a += '{}="{}" '.format(key, value)
-		self.a('<{} {}>'.format(name, a))
+		self.append_data('<{} {}>'.format(name, a))
 	
 	def handle_default(self, data):
 		'''Handles data when parsing where no other handler is specified.'''
-		self.a(data)
+		self.append_data(data)
