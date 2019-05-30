@@ -101,10 +101,10 @@ class Router:
 	
 	__slots__ = ('default', 'apps')
 
-	def __init__(self, default_app=None, apps=[]):
+	def __init__(self, default_app=None, apps=None):
 		if default_app:
 			self.default = Application(func=default_app, url='')
-		self.apps=apps
+		self.apps = [] if apps is None else apps
 		logging.info('Initialized styrofoam.Router')
 	
 	def add_app(self, *args):

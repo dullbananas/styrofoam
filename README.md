@@ -8,8 +8,6 @@
 
 Styrofoam is a WSGI routing middleware that is currently in alpha stage of development.
 
-
-
 ## Links
 * [PyPI](https://pypi.org/project/styrofoam/)
 * [Documentation](https://styrofoam.readthedocs.io/en/latest/)
