@@ -1,5 +1,6 @@
 # Styrofoam
 ![Travis CI Test Status](https://img.shields.io/travis/dullbananas/styrofoam/develop.svg?label=tests)
+![Codacy branch grade](https://img.shields.io/codacy/grade/b8dc7fecd2b94e1595d3d04fcd011f1d/develop.svg)
 ![Read the Docs](https://img.shields.io/readthedocs/styrofoam.svg)
 ![PyPI Version](https://img.shields.io/pypi/v/styrofoam.svg)
 ![PyPI Downloads](https://img.shields.io/pypi/dm/styrofoam.svg)
