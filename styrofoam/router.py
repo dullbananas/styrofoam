@@ -34,6 +34,15 @@ class Application:
 		self.modify_urls = modify_urls
 		logging.debug('Initialized Application with url "{}" and handler {}'.format(url, func))
 	
+	def _modify_url(self, url):
+		'''Calls ``styrofoam.utils.modify_url`` and automatically fills in the
+		``prefix`` argument. It is used by ``__call__`` and is only for internal
+		use. It also calls ``logging.debug()``.
+		'''
+		modified_url = modify_url(url, self.url)
+		logging.debug('Changed {} to {}'.format(url, modified_url))
+		return modified_url
+	
 	def __call__(self, environ, start_response):
 		'''Calls the application's ``func`` attribute and modifies URLs in the output
 		if the object is configured to do so.
@@ -48,9 +57,10 @@ class Application:
 			_headers = headers
 		# Code to run if object is configured to modyify urls
 		if self.modify_urls:
+			logging.debug('Modifying environ URLs')
 			# Modify CGI env variables that contain URLs
 			_environ = environ
-			_environ['PATH_INFO'] = modify_url(_environ['PATH_INFO'])
+			_environ['PATH_INFO'] = self._modify_url(_environ['PATH_INFO'])
 			_environ['REQUEST_URI'] = _environ['PATH_INFO'] + '?' + _environ['QUERY_STRING']
 			# Get self.func's output
 			_content = self.func(_environ, _start_response)
@@ -58,9 +68,9 @@ class Application:
 			_headers_dict = dict((x, y) for x, y in _headers) # Convert headers to a dictionary
 			for header_name in ('Content-Location', 'Location'):
 				if header_name in  _headers_dict:
-					_headers_dict[header_name] = modify_url(_headers_dict[header_name])
+					_headers_dict[header_name] = self._modify_url(_headers_dict[header_name])
 			_headers = []
-			for key, value in _headers_dict: # Convert dict back to list of tuples
+			for key, value in _headers_dict.items(): # Convert dict back to list of tuples
 				a_farting_tuple = (key, value)
 				_headers.append(a_farting_tuple)
 			# Modify urls in output's body
@@ -111,6 +121,7 @@ class Router:
 		self.apps.append(Application(*args))
 	
 	def __call__(self, environ, start_response):
+		logging.info('-'*40)
 		logging.info('Router has been called')
 		logging.debug('Values in environ dictionary:')
 		for key, value in environ.items():
