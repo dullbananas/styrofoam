@@ -11,5 +11,5 @@ python:
   - "nightly"
 install:
   - pip install .
-  - pip install pytest pytest-cov coverage python-codacy-coverage --upgrade
+  - pip install pytest pytest-cov coverage codacy-coverage --upgrade
 script: make test
