@@ -25,7 +25,7 @@ def test_router_init():
 
 def test_default_app_call():
 	r = Router(app)
-	assert r(sample_environ, f) == [app()]
+	assert r(sample_environ, f) == app()
 	
 
 def test_application_modify_url():

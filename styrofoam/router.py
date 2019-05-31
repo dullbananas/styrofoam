@@ -28,7 +28,7 @@ class Application:
 	                    currently supports HTTP headers and HTML.
 	'''
 	
-	def __init__(self, func, url, modify_urls=True):
+	def __init__(self, func, url, modify_urls=False):
 		self.func = func
 		self.url = url
 		self.modify_urls = modify_urls
@@ -82,7 +82,7 @@ class Application:
 					logging.warn('XML parsing error: line {e.lineno}, column {e.offset}: {msg} ({e.code})').format(e=e, msg=expat_messages[e.code])
 			# Make the response
 			start_response(_status, _headers)
-			return [_content]
+			return _content
 		# If URLs don't need modification, self.func can simply be called
 		else:
 			return self.func(environ, start_response)
