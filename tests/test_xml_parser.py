@@ -1,6 +1,11 @@
 from styrofoam.parser import XMLParser
 import pytest
 
+def rm_whitespace(text):
+	result = text.replace(' ', '')
+	result = result.replace('\n', '')
+	return result
+
 
 class MyParser(XMLParser):
 	
@@ -10,11 +15,10 @@ class MyParser(XMLParser):
 	}
 
 
-@pytest.mark.filterwarnings('ignore::pytest.PytestCollectionWarning')
 def test_xml_relative_urls():
 	xml = '''<element >
 <thing url="path/to/thing" ></thing>
 <oof url1="path/to/garbage" url2="nooo/ooo/ooo/oo" ></oof>
 </element>'''
 	parser = MyParser(xml, '/prefix/of/urls', parse=True)
-	assert parser.parsed_data == xml
+	assert rm_whitespace(parser.parsed_data) == rm_whitespace(xml)
