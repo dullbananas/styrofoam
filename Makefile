@@ -1,7 +1,13 @@
-.PHONY: test
+PHONY: cov, test, travisbuild
 
-test:
+travisbuild:
 	coverage run --source styrofoam -m pytest
-	coverage html
 	coverage xml
 	python-codacy-coverage -r coverage.xml
+
+test:
+	python3 -m pytest
+
+cov:
+	coverage run --source styrofoam -m pytest
+	coverage html

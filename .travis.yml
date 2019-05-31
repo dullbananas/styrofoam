@@ -12,4 +12,4 @@ python:
 install:
   - pip install .
   - pip install pytest pytest-cov coverage codacy-coverage --upgrade
-script: make test
+script: make travisbuild
