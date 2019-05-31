@@ -19,7 +19,7 @@ def modify_url(url, prefix, remove_prefix=False):
 	                      ``False``.
 	'''
 	
-	if remove_prefix:
+	if not remove_prefix:
 		# See if the path is relative and do nothing
 		if not url.startswith('/'):
 			return url
