@@ -1,8 +1,17 @@
 import pytest
 from styrofoam import Router, Application
 
-def f():
+sample_environ = {
+	'PATH_INFO': '/hi',
+	'QUERY_STRING': '',
+	'REQUEST_URI': '/hi'
+}
+
+def f(*args):
 	pass
+
+def app(*args):
+	return 'hi'
 
 def test_router_init():
 	r = Router(f, [
@@ -13,6 +22,11 @@ def test_router_init():
 	assert len(r.apps) == 2
 	r.add_app(f, '/url/c')
 	assert len(r.apps) == 3
+
+def test_default_app_call():
+	r = Router(app)
+	assert r(sample_environ, f) == [app()]
+	
 
 def test_application_modify_url():
 	a = Application(f, '/prefix')

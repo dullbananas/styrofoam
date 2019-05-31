@@ -2,7 +2,7 @@ from styrofoam.parser import XMLParser
 import pytest
 
 
-class TestParser(XMLParser):
+class MyParser(XMLParser):
 	
 	replacements = {
 		'thing': 'url',
@@ -10,10 +10,11 @@ class TestParser(XMLParser):
 	}
 
 
+@pytest.mark.filterwarnings('ignore::pytest.PytestCollectionWarning')
 def test_xml_relative_urls():
 	xml = '''<element >
 <thing url="path/to/thing" ></thing>
 <oof url1="path/to/garbage" url2="nooo/ooo/ooo/oo" ></oof>
 </element>'''
-	parser = TestParser(xml, '/prefix/of/urls', parse=True)
+	parser = MyParser(xml, '/prefix/of/urls', parse=True)
 	assert parser.parsed_data == xml
