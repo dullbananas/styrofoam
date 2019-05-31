@@ -1,7 +1,7 @@
 PHONY: cov, test, travisbuild
 
 travisbuild:
-	coverage run --source styrofoam -m pytest
+	coverage run --source styrofoam -m pytest -v
 	coverage xml
 	python-codacy-coverage -r coverage.xml
 
