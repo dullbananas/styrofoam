@@ -8,7 +8,7 @@ setup(
 	name='styrofoam',
 	version=__version__,
 	packages=find_packages(),
-	python_requires='>=3',
+	python_requires='>=3.4',
 	
 	author='Dull Bananas',
 	author_email='dull.bananas0@gmail.com',
