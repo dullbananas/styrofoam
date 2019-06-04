@@ -4,9 +4,10 @@ Application object that represents a WSGI app
 
 import logging
 from .parser_types import mimetype as mime
-from .utils import modify_url
+from .utils import modify_url, unnest_list
 from xml.parsers.expat.errors import messages as expat_messages
 from xml.parsers.expat import ExpatError
+import chardet
 
 
 class Application:
@@ -34,12 +35,12 @@ class Application:
 		self.modify_urls = modify_urls
 		logging.debug('Initialized Application with url "{}" and handler {}'.format(url, func))
 	
-	def _modify_url(self, url):
+	def _modify_url(self, url, remove_prefix=False):
 		'''Calls ``styrofoam.utils.modify_url`` and automatically fills in the
 		``prefix`` argument. It is used by ``__call__`` and is only for internal
 		use. It also calls ``logging.debug()``.
 		'''
-		modified_url = modify_url(url, self.url)
+		modified_url = modify_url(url, self.url, remove_prefix)
 		logging.debug('Changed {} to {}'.format(url, modified_url))
 		return modified_url
 	
@@ -50,7 +51,7 @@ class Application:
 		_status = ''
 		_headers = []
 		_content = ''
-		_environ = {}
+		_environ = {} 
 		def _start_response(status, headers):
 			nonlocal _status, _headers
 			_status = status
@@ -60,10 +61,15 @@ class Application:
 			logging.debug('Modifying environ URLs')
 			# Modify CGI env variables that contain URLs
 			_environ = environ
-			_environ['PATH_INFO'] = self._modify_url(_environ['PATH_INFO'])
-			_environ['REQUEST_URI'] = _environ['PATH_INFO'] + '?' + _environ['QUERY_STRING']
-			# Get self.func's output
-			_content = self.func(_environ, _start_response)
+			_environ['PATH_INFO'] = self._modify_url(_environ['PATH_INFO'], True)
+			_environ['REQUEST_URI'] = _environ['PATH_INFO'] + '?' + _environ['QUERY_STRING'] if len(_environ['QUERY_STRING']) > 0 else _environ['PATH_INFO']
+			# Process self.func's output
+			_app_output = self.func(_environ, _start_response)
+			_app_output = unnest_list(_app_output)
+			encoding = chardet.detect(_app_output[0])['encoding']
+			_content = ''.join([i.decode(encoding) for i in _app_output])
+			#for i in _app_output:
+			#	_content += i.decode(encoding)
 			# Modify urls in headers
 			_headers_dict = dict((x, y) for x, y in _headers) # Convert headers to a dictionary
 			for header_name in ('Content-Location', 'Location'):
@@ -82,7 +88,7 @@ class Application:
 					logging.warn('XML parsing error: line {e.lineno}, column {e.offset}: {msg} ({e.code})').format(e=e, msg=expat_messages[e.code])
 			# Make the response
 			start_response(_status, _headers)
-			return _content
+			return _content.encode(encoding)
 		# If URLs don't need modification, self.func can simply be called
 		else:
 			return self.func(environ, start_response)
@@ -128,7 +134,7 @@ class Router:
 			logging.debug('    {} = "{}"'.format(key, value))
 		selected_app = self.default
 		for app in self.apps:
-			logging.debug('Checking if "{}" starts with "{}"'.format(environ['SCRIPT_NAME'], app.url))
+			logging.debug('Checking if "{}" starts with "{}"'.format(environ['PATH_INFO'], app.url))
 			if environ['PATH_INFO'].startswith(app.url):
 				logging.debug('App {} has been selected'.format(app))
 				selected_app = app

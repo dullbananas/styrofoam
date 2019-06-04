@@ -13,6 +13,12 @@ def f(*args):
 def app(*args):
 	return 'hi'
 
+def app1(environ, start_response):
+	start_response('200 OK', [('Content-Type', 'text/plain')])
+	env_list = (environ['PATH_INFO'], environ['QUERY_STRING'], environ['REQUEST_URI'])
+	for i in env_list:
+		yield '{};'.format(i).encode('utf-8')
+
 def test_router_init():
 	r = Router(f, [
 		Application(f, '/url/a'),
@@ -23,7 +29,13 @@ def test_router_init():
 	r.add_app(f, '/url/c')
 	assert len(r.apps) == 3
 
-def test_default_app_call():
+def test_router_environ():
+	r = Router(f, [
+		Application(app1, '/hi', modify_urls=True)
+	])
+	assert r(sample_environ, f) == '/;;/;'
+
+def test_router_default_app_call():
 	r = Router(app)
 	assert r(sample_environ, f) == app()
 	

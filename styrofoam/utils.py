@@ -27,4 +27,18 @@ def modify_url(url, prefix, remove_prefix=False):
 		else:
 			return prefix + url
 	else:
-		return url[len(prefix):]
+		return url[len(prefix):] if url != prefix else '/'
+
+
+def unnest_list(obj):
+	'''Changes ``[['hi']]`` to ``['hi']`` and ``[[['hi', 'bye']]]`` to
+	``['hi', 'bye']``, etc., then coverts the list items to ``bytes`` objects.
+	This is used by the router to prevent the ``chardet`` library from raising
+	a ``TypeError``.
+	'''
+	if type(obj) in (bytearray, bytes):
+		return [obj]
+	elif type(obj) == str:
+		return [bytes(obj, 'utf-8')]
+	else:
+		return unnest_list(list(obj)[0])
